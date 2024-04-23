@@ -258,6 +258,9 @@ while True:
         screen.blit(ground, (ground_x, 450))
         screen.blit(ground, (ground_x + 1280, 450))
 
+        screen.blit(ground, (ground_x, 125))
+        screen.blit(ground, (ground_x + 1280, 125))
+
         if ground_x <= -1280:
             ground_x = 0
 
