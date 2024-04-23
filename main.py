@@ -3,7 +3,7 @@ import sys
 import random
 
 pygame.init()
-screen = pygame.display.set_mode((1280, 700))
+screen = pygame.display.set_mode((1280, 750))
 clock = pygame.time.Clock()
 pygame.display.set_caption("Dino Game")
 
@@ -51,20 +51,20 @@ class Dino(pygame.sprite.Sprite):
 
     def jump(self):
         jump_sfx.play()
-        if self.rect.centery >= 360:
+        if self.rect.centery >= 450:
             while self.rect.centery - self.velocity > 10:
                 self.rect.centery -= 1
 
     def duck(self):
         self.ducking = True
-        self.rect.centery = 380
+        self.rect.centery = 460
 
     def unduck(self):
         self.ducking = False
-        self.rect.centery = 360
+        self.rect.centery = 450
 
     def apply_gravity(self):
-        if self.rect.centery <= 360:
+        if self.rect.centery <= 450:
             self.rect.centery += self.gravity
 
     def update(self):
@@ -155,7 +155,7 @@ dino_group = pygame.sprite.GroupSingle()
 ptero_group = pygame.sprite.Group()
 
 # Objects
-dinosaur = Dino(50, 360)
+dinosaur = Dino(50, 450)
 dino_group.add(dinosaur)
 
 # Sounds
@@ -195,7 +195,7 @@ while True:
             pygame.quit()
             sys.exit()
         if event.type == CLOUD_EVENT:
-            current_cloud_y = random.randint(50, 300)
+            current_cloud_y = random.randint(50, 350)
             current_cloud = Cloud(cloud, 1380, current_cloud_y)
             cloud_group.add(current_cloud)
         if event.type == pygame.KEYDOWN:
@@ -226,7 +226,7 @@ while True:
         if obstacle_spawn:
             obstacle_random = random.randint(1, 50)
             if obstacle_random in range(1, 7):
-                new_obstacle = Cactus(1280, 340)
+                new_obstacle = Cactus(1280, 435)
                 obstacle_group.add(new_obstacle)
                 obstacle_timer = pygame.time.get_ticks()
                 obstacle_spawn = False
@@ -255,8 +255,8 @@ while True:
 
         ground_x -= game_speed
 
-        screen.blit(ground, (ground_x, 360))
-        screen.blit(ground, (ground_x + 1280, 360))
+        screen.blit(ground, (ground_x, 450))
+        screen.blit(ground, (ground_x + 1280, 450))
 
         if ground_x <= -1280:
             ground_x = 0
