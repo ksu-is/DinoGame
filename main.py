@@ -3,7 +3,7 @@ import sys
 import random
 
 pygame.init()
-screen = pygame.display.set_mode((1280, 720))
+screen = pygame.display.set_mode((1280, 700))
 clock = pygame.time.Clock()
 pygame.display.set_caption("Dino Game")
 
