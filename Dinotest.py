@@ -57,19 +57,19 @@ class Dino(pygame.sprite.Sprite):
             self.rect.y = 125
             self.on_fground = True
         else:
-            self.rect.y = 550
+            self.rect.y = 540
             self.on_fground = False
 
     def jump(self):
         jump_sfx.play()
-        if self.rect.centery >= 540:
+        if self.rect.centery >= 540 or (self.on_fground and self.rect.centery >= 125):
             while self.rect.centery - self.velocity > 180:
                 self.rect.centery -= 1
     
     def duck(self):
         self.ducking = True
         if self.on_fground:
-            self.rect.centery = 110
+            self.rect.centery = 115
         else:
             self.rect.centery = 560
 
@@ -82,7 +82,7 @@ class Dino(pygame.sprite.Sprite):
 
     def apply_gravity(self):
         if self.on_fground:
-            if self.rect.centery <= 120:
+            if self.rect.centery <= 125:
                 self.rect.centery +=self.gravity
         elif self.rect.centery <= 540:
             self.rect.centery += self.gravity
@@ -157,7 +157,7 @@ class Ptero(pygame.sprite.Sprite):
 
 
 game_speed = 4
-jump_count = 10
+jump_count = 5
 player_score = 0
 game_over = False
 obstacle_timer = 0
@@ -240,9 +240,7 @@ while True:
             elif event.key == pygame.K_f:
                 dinosaur.flip()
                 if dinosaur.on_fground:
-                    fground_gravity = 4.5
-                else:
-                    fground_gravity = 0
+                    dinosaur.apply_gravity()
 
     screen.fill("white")
 
