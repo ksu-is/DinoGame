@@ -62,21 +62,30 @@ class Dino(pygame.sprite.Sprite):
 
     def jump(self):
         jump_sfx.play()
-        if self.rect.centery >= 540:
-            while self.rect.centery - self.velocity > 210:
+        if self.on_fground:
+            while self.rect.centery - self.velocity > 125:
+                self.rect.centery -= 1
+        elif self.rect.centery >= 540:
+            while self.rect.centery - self.velocity > 180:
                 self.rect.centery -= 1
 
     def duck(self):
         self.ducking = True
-        self.rect.centery = 560
+        if self.on_fground:
+            self.rect.centery = 110
+        else:
+            self.rect.centery = 560
 
     def unduck(self):
         self.ducking = False
-        self.rect.centery = 540
+        if self.on_fground:
+            self.rect.centery =125
+        else:
+            self.rect.centery = 540
 
     def apply_gravity(self):
         if self.on_fground:
-            if self.rect.centery <= 125:
+            if self.rect.centery <= 120:
                 self.rect.centery +=self.gravity
         elif self.rect.centery <= 540:
             self.rect.centery += self.gravity
