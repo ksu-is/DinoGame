@@ -62,7 +62,7 @@ class Dino(pygame.sprite.Sprite):
 
     def jump(self):
         jump_sfx.play()
-        if self.rect.centery >= 550:
+        if self.rect.centery >= 540:
             while self.rect.centery - self.velocity > 210:
                 self.rect.centery -= 1
 
@@ -72,10 +72,13 @@ class Dino(pygame.sprite.Sprite):
 
     def unduck(self):
         self.ducking = False
-        self.rect.centery = 550
+        self.rect.centery = 540
 
     def apply_gravity(self):
-        if self.rect.centery <= 550:
+        if self.on_fground:
+            if self.rect.centery <= 125:
+                self.rect.centery +=self.gravity
+        elif self.rect.centery <= 540:
             self.rect.centery += self.gravity
 
     def update(self):
@@ -174,7 +177,7 @@ dino_group = pygame.sprite.GroupSingle()
 ptero_group = pygame.sprite.Group()
 
 # Objects
-dinosaur = Dino(50, 545)
+dinosaur = Dino(50, 540)
 dino_group.add(dinosaur)
 
 # Sounds
