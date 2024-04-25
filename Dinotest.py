@@ -48,6 +48,17 @@ class Dino(pygame.sprite.Sprite):
         self.velocity = 50
         self.gravity = 4.5
         self.ducking = False
+        self.is_flipped = False
+        self.on_fground = False
+
+    def flip(self):
+        self.is_flipped = not self.is_flipped
+        if self.is_flipped:
+            self.rect.y = 125
+            self.on_fground = True
+        else:
+            self.rect.y = 550
+            self.on_fground = False
 
     def jump(self):
         jump_sfx.play()
@@ -79,7 +90,10 @@ class Dino(pygame.sprite.Sprite):
         if self.ducking:
             self.image = self.ducking_sprites[int(self.current_image)]
         else:
-            self.image = self.running_sprites[int(self.current_image)]
+            if self.on_fground:
+                self.image = pygame.transform.flip(self.running_sprites[int(self.current_image)], False, True)
+            else:
+                self.image = self.running_sprites[int(self.current_image)]
 
 
 class Cactus(pygame.sprite.Sprite):
@@ -187,6 +201,7 @@ def end_game():
     cloud_group.empty()
     obstacle_group.empty()
 
+fground_gravity = 0
 
 while True:
     keys = pygame.key.get_pressed()
@@ -210,10 +225,23 @@ while True:
                     game_over = False
                     game_speed = 5
                     player_score = 0
+            elif event.key == pygame.K_f:
+                dinosaur.flip()
+                if dinosaur.on_fground:
+                    fground_gravity = 4.5
+                else:
+                    fground_gravity = 0
 
     screen.fill("white")
 
     # Collisions
+    if not dinosaur.on_fground:
+        if pygame.sprite.spritecollide(dino_group.sprite, obstacle_group, False):
+            game_over = True
+            death_sfx.play()
+        if game_over:
+            end_game()
+
     if pygame.sprite.spritecollide(dino_group.sprite, obstacle_group, False):
         game_over = True
         death_sfx.play()
@@ -260,6 +288,8 @@ while True:
 
         ground_x -= game_speed
         fground_x -= game_speed
+
+        fground_rect.y += fground_gravity
 
         screen.blit(ground, (ground_x, 550))
         screen.blit(ground, (ground_x + 1280, 550))
