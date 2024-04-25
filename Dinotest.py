@@ -57,12 +57,12 @@ class Dino(pygame.sprite.Sprite):
             self.rect.y = 125
             self.on_fground = True
         else:
-            self.rect.y = 540
+            self.rect.y = 500
             self.on_fground = False
 
     def jump(self):
         jump_sfx.play()
-        if self.rect.centery >= 540 or (self.on_fground and self.rect.centery >= 125):
+        if self.rect.centery >= 540:
             while self.rect.centery - self.velocity > 180:
                 self.rect.centery -= 1
     
