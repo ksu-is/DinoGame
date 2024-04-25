@@ -51,20 +51,20 @@ class Dino(pygame.sprite.Sprite):
 
     def jump(self):
         jump_sfx.play()
-        if self.rect.centery >= 450:
-            while self.rect.centery - self.velocity > 10:
+        if self.rect.centery >= 550:
+            while self.rect.centery - self.velocity > 210:
                 self.rect.centery -= 1
 
     def duck(self):
         self.ducking = True
-        self.rect.centery = 460
+        self.rect.centery = 560
 
     def unduck(self):
         self.ducking = False
-        self.rect.centery = 450
+        self.rect.centery = 550
 
     def apply_gravity(self):
-        if self.rect.centery <= 450:
+        if self.rect.centery <= 550:
             self.rect.centery += self.gravity
 
     def update(self):
@@ -147,6 +147,11 @@ ground_rect = ground.get_rect(center=(640, 400))
 cloud = pygame.image.load("assets/cloud.png")
 cloud = pygame.transform.scale(cloud, (200, 80))
 
+fground = pygame.image.load("assets/flipedground.png")
+fground = pygame.transform.scale(fground, (1300,25))
+fground_x = 0
+fground_rect = fground.get_rect(center=(640,400))
+
 # Groups
 
 cloud_group = pygame.sprite.Group()
@@ -155,7 +160,7 @@ dino_group = pygame.sprite.GroupSingle()
 ptero_group = pygame.sprite.Group()
 
 # Objects
-dinosaur = Dino(50, 450)
+dinosaur = Dino(50, 545)
 dino_group.add(dinosaur)
 
 # Sounds
@@ -226,7 +231,7 @@ while True:
         if obstacle_spawn:
             obstacle_random = random.randint(1, 50)
             if obstacle_random in range(1, 7):
-                new_obstacle = Cactus(1280, 435)
+                new_obstacle = Cactus(1280, 535)
                 obstacle_group.add(new_obstacle)
                 obstacle_timer = pygame.time.get_ticks()
                 obstacle_spawn = False
@@ -255,14 +260,16 @@ while True:
 
         ground_x -= game_speed
 
-        screen.blit(ground, (ground_x, 450))
-        screen.blit(ground, (ground_x + 1280, 450))
+        screen.blit(ground, (ground_x, 550))
+        screen.blit(ground, (ground_x + 1280, 550))
 
-        screen.blit(ground, (ground_x, 125))
-        screen.blit(ground, (ground_x + 1280, 125))
+        screen.blit(fground, (fground_x, 125))
+        screen.blit(fground, (fground_x + 1280, 125))
 
         if ground_x <= -1280:
             ground_x = 0
+        if fground_x <= -1280:
+            fground_x = 0
 
     clock.tick(120)
     pygame.display.update()
