@@ -147,7 +147,7 @@ class Ptero(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.x_pos = 1300
-        self.y_pos = random.choice([280, 295, 350])
+        self.y_pos = random.choice([180, 520, 470, 210])
         self.sprites = []
         self.sprites.append(
             pygame.transform.scale(
@@ -179,7 +179,7 @@ player_score = 0
 game_over = False
 obstacle_timer = 0
 obstacle_spawn = False
-obstacle_cooldown = 1000
+obstacle_cooldown = 750
 
 # Surfaces
 
@@ -188,7 +188,7 @@ ground = pygame.transform.scale(ground, (1300, 25))
 ground_x = 0
 ground_rect = ground.get_rect(center=(640, 400))
 cloud = pygame.image.load("assets/cloud.png")
-cloud = pygame.transform.scale(cloud, (200, 80))
+cloud = pygame.transform.scale(cloud, (350, 140))
 
 fground = pygame.image.load("assets/flipedground.png")
 fground = pygame.transform.scale(fground, (1300,25))
@@ -296,7 +296,7 @@ while True:
                 obstacle_timer = pygame.time.get_ticks()
                 obstacle_spawn = False
             elif obstacle_random in range(10, 13):
-                new_obstacle = FCactus(1280, 125)
+                new_obstacle = FCactus(1280, 130)
                 obstacle_group.add(new_obstacle)
                 obstacle_timer = pygame.time.get_ticks()
                 obstacle_spawn = False
