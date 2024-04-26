@@ -125,6 +125,23 @@ class Cactus(pygame.sprite.Sprite):
         self.x_pos -= game_speed
         self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
 
+class FCactus(pygame.sprite.Sprite):
+    def __init__(self, x_pos, y_pos):
+        super().__init__()
+        self.x_pos = x_pos
+        self.y_pos = y_pos
+        self.sprites = []
+        for i in range(1, 7):
+            current_sprite = pygame.transform.scale(
+                pygame.image.load(f"assets/fcacti/fcactus{i}.png"), (100, 100))
+            self.sprites.append(current_sprite)
+        self.image = random.choice(self.sprites)
+        self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
+
+    def update(self):
+        self.x_pos -= game_speed
+        self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
+
 
 class Ptero(pygame.sprite.Sprite):
     def __init__(self):
@@ -275,6 +292,11 @@ while True:
                 obstacle_spawn = False
             elif obstacle_random in range(7, 10):
                 new_obstacle = Ptero()
+                obstacle_group.add(new_obstacle)
+                obstacle_timer = pygame.time.get_ticks()
+                obstacle_spawn = False
+            elif obstacle_random in range(10, 13):
+                new_obstacle = FCactus(1280, 125)
                 obstacle_group.add(new_obstacle)
                 obstacle_timer = pygame.time.get_ticks()
                 obstacle_spawn = False
