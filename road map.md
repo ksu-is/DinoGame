@@ -1,6 +1,6 @@
 - [x] Clone existing repository to this repository
 - [x] improve gameplay so that it is easier to play
-- [ ] add in new animations to game for the new mod
-- [ ] add in new action for the new mod
+- [x] add in new animations to game for the new mod
+- [x] add in new action for the new mod
 - [x] resize the game to fit the mod
-- [ ] add in easter eggs in game
+- [x] add in easter eggs in game
